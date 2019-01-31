@@ -1,0 +1,161 @@
+1)variable declare:
+-- Database to use
+use DEV_TEST
+
+-- Declare the variable you need
+DECLARE @Age int;
+
+-- Set the value of the variable
+BEGIN
+SET @Age = 22
+END
+
+-- Run the query testing the paramenters
+select * from student_nusrat 
+WHERE student_nusrat.age = @Age
+
+2)  data-type declare
+
+
+
+3)
+
+create proc tablecreation as    
+BEGIN  
+CREATE TABLE dbo.book_nusrat    
+   (bookname varchar(200) PRIMARY KEY NOT NULL,    
+    bookisbn int NOT NULL,
+	bookauthor varchar(200) NOT NULL,     
+    bookprice money NULL,    
+    bookpublishdate date NULL)  
+END
+
+**********************
+exec tablecreation 
+4)
+create proc datainsertion  
+
+@bookname varchar(200),@bookisbn int,@bookauthor varchar(200), @bookprice money,@bookpublishdate date
+as
+begin
+insert into dbo.book_nusrat(bookname,bookisbn,
+bookauthor,bookprice,bookpublishdate) values (@bookname,@bookisbn,@bookauthor,@bookprice,@bookpublishdate)
+end
+
+
+datainsertion 'dld',125,'morris',3144.29,'1993-01-13'
+datainsertion  'vlsi',135,'linda',2000.29,'1965-01-18'
+datainsertion  'operating system',120,'rubel',2020.89,'2000-01-18'
+datainsertion  'database',240,'ruby',1525.23,'2012-02-19'
+datainsertion  'math',214,'rasel',1122.23,'2017-12-19'
+datainsertion  'physics',220,'kabir',1452.20,'2017-02-20'
+
+
+create proc dataselection as 
+begin
+select * from dbo.book_nusrat
+end
+
+dataselection
+exec dataselection
+
+
+*******************update delete*****************
+create proc dataupdate @updateisbn int,@updatename varchar(200) as 
+begin
+Update dbo.book_nusrat set bookisbn=@updateisbn where bookname=@updatename
+end
+
+*****dataupdate 300,'dld'
+
+
+
+create proc pricedelete @deletebookprice money as 
+begin
+delete dbo.book_nusrat  where bookprice=@deletebookprice
+end
+
+****pricedelete 2000.29
+
+ ******************************************************************************************************************
+database queries on all joins
+
+student table
+
+roll
+name 
+address 
+phone 
+age
+
+
+studentcourse_nusrat
+
+course_id
+roll 
+
+
+SELECT studentcourse_nusrat.COURSE_ID, Student_name.NAME, Student_nusrat.AGE FROM Student INNER JOIN StudentCourse_nusrat ON Student_nusrat.ROLL = StudentCourse_nusrat.ROLL;  
+
+
+
+insert into student_nusrat (roll,name,address,phone,age)
+VALUES 
+    (1, 'keya','dhanmondi',01710005142,21),
+    (2, 'promi','mirpur',01710005145,22),
+    (3, 'toma','bonani',01710005140,23),
+    (4, 'muna','pollabi',01710005143,25),
+    (5, 'tonni','bonosree',01710005152,20),
+    (6, 'rumi','adabor',01710005262,26),
+    (7, 'priyata','uttara',01710006142,18);
+
+
+insert into studentcourse_nusrat (course_id,roll)
+VALUES 
+    (1,7),
+    (2,2),
+    (3,4),
+    (1,5),
+    (4,3),
+    (5,1),
+    (4,6);  
+
+
+select * from studentcourse_nusrat;
+
+select * from student_nusrat; 
+
+inner join:
+   
+SELECT studentcourse_nusrat.COURSE_ID, Student_nusrat.NAME, 
+Student_nusrat.AGE FROM Student_nusrat 
+INNER JOIN StudentCourse_nusrat ON Student_nusrat.ROLL = StudentCourse_nusrat.ROLL;
+
+left join :
+
+SELECT Student_nusrat.NAME,StudentCourse_nusrat.COURSE_ID 
+FROM Student_nusrat
+LEFT JOIN StudentCourse_nusrat 
+ON StudentCourse_nusrat.ROLL = Student_nusrat.ROLL;     
+
+right join :
+SELECT Student_nusrat.NAME,StudentCourse_nusrat.COURSE_ID 
+FROM Student_nusrat
+RIGHT JOIN StudentCourse_nusrat 
+ON StudentCourse_nusrat.ROLL = Student_nusrat.ROLL;
+
+full join :
+SELECT Student_nusrat.NAME,StudentCourse_nusrat.COURSE_ID 
+FROM Student_nusrat
+FULL JOIN StudentCourse_nusrat
+ON StudentCourse_nusrat.ROLL = Student_nusrat.ROLL;
+
+
+SELECT student_nusrat.name,student_nusrat.age
+FROM student_nusrat
+GROUP BY student_nusrat.name
+HAVING COUNT(student_nusrat.age) > 21;
+
+ 
+
+
